@@ -146,6 +146,11 @@ def extract_article(url: str, source_name: str):
     if link_tag and link_tag.get("href"):
         canonical = link_tag["href"]
 
+    if title:
+        title = unescape(unescape(title)).strip()
+    if description:
+        description = unescape(unescape(description)).strip()
+
     if not title:
         return None
 
