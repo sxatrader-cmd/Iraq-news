@@ -1,0 +1,35 @@
+name: تحديث أخبار العراق
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: تنزيل المستودع
+        uses: actions/checkout@v4
+
+      - name: تجهيز بايثون
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: تنصيب المكتبات
+        run: pip install -r requirements.txt
+
+      - name: تشغيل السكريبت
+        run: python iraq_news_watcher.py
+
+      - name: حفظ ورفع التحديثات
+        run: |
+          git config user.name "iraq-news-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add iraq_news.html seen_urls.json watcher.log
+          git diff --staged --quiet || git commit -m "تحديث تلقائي: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
