@@ -12,7 +12,7 @@ import re
 import time
 from datetime import datetime
 from pathlib import Path
-from html import escape
+from html import escape, unescape
 from urllib.parse import urljoin, urlparse
 
 import requests
