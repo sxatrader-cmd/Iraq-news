@@ -33,3 +33,5 @@ jobs:
           git add iraq_news.html seen_urls.json watcher.log
           git diff --staged --quiet || git commit -m "تحديث تلقائي: $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push
+
+          
